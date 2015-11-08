@@ -1,22 +1,21 @@
 function Calls() {
 
-    var useFake = true;
+    var useFake = false;
 
-    this.makeCall = function (cmd, params) {
+    this.makeCall = function (cmd, params, after) {
         if (useFake)
-            return this.fakeCall(cmd, params);
-        var ajex = $.ajax({
-            url: "../php/call.php",
-            cmd: cmd,
-            params: params,
+            return this.fakeCall(cmd, params, after);
+        $.ajax({
+            url: "../php/call.php?cmd=" + cmd + "&params=" + params,
+            type: "GET",
             dataType: "json",
-            async: false
+            async: true,
+            complete: function(ajex) {handleAjex(ajex, after)}
         });
-        var json = $.parseJSON(ajex.responseText);
-        return json.DataTables;
+
     };
 
-    this.fakeCall = function (cmd, params) {
+    this.fakeCall = function (cmd, params, after) {
         var file = "";
         switch (cmd) {
             case "GetTopics":
@@ -24,13 +23,17 @@ function Calls() {
                 console.log(file);
                 break;
         }
-        var ajex = $.ajax({
+        $.ajax({
             url: ("../json/" + file + ".json"),
             dataType: "json",
-            async: false
+            async: true,
+            complete: function(ajex) {handleAjex(ajex, after)}
         });
+    };
+
+    function handleAjex(ajex, after) {
         var json = $.parseJSON(ajex.responseText);
-        return json.DataTables;
+        after(json.DataTables);
     }
 
 }

@@ -1,5 +1,7 @@
 $( initialise );
 
+var csv = [];
+
 function initialise() {
     var ajex = $.ajax({
         url: ("../csv/million.csv"),
@@ -9,23 +11,34 @@ function initialise() {
 
     var allTextLines = ajex.responseText.split(/\r\n|\n/);
     var headers = allTextLines[0].split(',');
-    var lines = [];
 
     for (var i=1; i<allTextLines.length; i++) {
         var data = allTextLines[i].split(',');
         if (data.length == headers.length) {
 
-            var tarr = [];
+            var tarr = {};
             for (var j=0; j<headers.length; j++) {
-                tarr[headers[j]]=getData(data[j]);
+                tarr[getData(headers[j])]=getData(data[j]);
             }
-            lines.push(tarr);
+            csv.push(tarr);
         }
     }
-    console.log(lines);
 }
 
 function getData(data) {
     var inD = $.parseJSON("{ \"att\": " + data +  "}");
     return inD.att;
+}
+
+function getRandomDom() {
+    var loc = Math.round(Math.random() * 100);
+    return csv[loc];
+}
+
+function getRandomSite(after) {
+    var domain = getRandomDom();
+    var domainName = domain["Domain"];
+    new Calls().makeCall("GetTopics", "Item=" + domainName, function(out) {
+        after(new Domain(domainName, out));
+    });
 }

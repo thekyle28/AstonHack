@@ -1,59 +1,52 @@
 /* global Stopwatch */
 
-var counter = 0;
 var score = 0;
 var timer;
+var nextSite;
 $( initialise );
-var sites = [{name: "Google", health: 10},
-         {name: "Facebook", health: 8},
-         {name: "Imgur", health: 6},
-         {name:"Reddit", health: 4}];
 
-function initialise(){
-    timer = new Stopwatch(document.getElementById("timer"));
-    shuffle(sites);
-    createTarget();
-    timer.start();
-    $(".ammo-selector").click(function(){
+function initialise() {
+    //console.log(new Domain("imgur.com", new Calls().makeCall("GetTopics", "Item=imgur.com")));
+    getRandomSite(function(out) {
+        nextSite = out;
+        createTarget();
+        startTimer(30, document.querySelector('#timer'));
+    });
+    $(".ammo-selector").click(function() {
         console.log(this);
         $(".ammo-selected").removeClass("ammo-selected");
         $(this).addClass("ammo-selected");
         
     });
-    console.log(new Domain("imgur.com", new Calls().makeCall("GetTopics", "Item=imgur.com")));
-    startTimer(30, document.querySelector('#timer'));
 }
 
 
-function createTarget(){
-    if (counter < sites.length){
-        var site = sites[counter++];
-        target = $("<div/>");
-        target.attr("id", "target");
-        target.text(site.name + " " + site.health);
-        
-        target.click(function(){
-            console.log(site);
-            if (site.health <= 0) {
-                $(this).stop();
-                $(this).remove();
-                score++;
-                setScore(score);
-                createTarget();
-            } else {
-                setScore(score);
-                $(this).stop();
-                site.health--; 
-                $(this).text(site.name + " " + site.health);
-                $(this).effect("shake");
-            }
-        });
-        $("#target-area").append(target);
-        
-    } else {
-        timer.stop();
-        $(".container").append("<h1>YOU WIN</h1>");   
-    }
+function createTarget() {
+    var site = nextSite;
+    getRandomSite(function(out) {
+        nextSite = out;
+    });
+
+    var target = $("<div/>");
+    target.attr("id", "target");
+    target.text(site.name + " " + site.health);
+
+    target.click(function() {
+        if (site.health <= 0) {
+            $(this).stop();
+            $(this).remove();
+            score++;
+            setScore(score);
+            createTarget();
+        } else {
+            setScore(score);
+            $(this).stop();
+            site.health--;
+            $(this).text(site.name + " " + site.health);
+            $(this).effect("shake");
+        }
+    });
+    $("#target-area").append(target);
     
 }
 
