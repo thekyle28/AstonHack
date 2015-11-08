@@ -1,6 +1,6 @@
 /* global Stopwatch */
 
-var counter = 0
+var counter = 0;
 var score = 0;
 var timer;
 $( initialise );
@@ -21,6 +21,7 @@ function initialise(){
         
     });
     console.log(new Domain("imgur.com", new Calls().makeCall("GetTopics", "Item=imgur.com")));
+    startTimer(30, document.querySelector('#timer'));
 }
 
 
@@ -36,16 +37,15 @@ function createTarget(){
             if (site.health <= 0) {
                 $(this).stop();
                 $(this).remove();
-                score++
+                score++;
                 setScore(score);
                 createTarget();
-            } else { 
+            } else {
                 setScore(score);
                 $(this).stop();
                 site.health--; 
                 $(this).text(site.name + " " + site.health);
                 $(this).effect("shake");
-                
             }
         });
         $("#target-area").append(target);
@@ -80,39 +80,30 @@ function shuffle(array) {
   return array;
 }
 
-        /**
-         * Created by Kyle on 08/11/2015.
-         */
-        function startTimer(duration, display) {
-            var start = Date.now(),
-                    diff,
-                    minutes,
-                    seconds;
-            function timer() {
-                // get the number of seconds that have elapsed since
-                // startTimer() was called
-                diff = duration - (((Date.now() - start) / 1000) | 0);
+function startTimer(duration, display) {
+    var start = Date.now(),
+            diff,
+            minutes,
+            seconds;
+    function timer() {
+        // get the number of seconds that have elapsed since
+        // startTimer() was called
+        diff = duration - (((Date.now() - start) / 1000) | 0);
 
-                // does the same job as parseInt truncates the float
-                minutes = (diff / 60) | 0;
-                seconds = (diff % 60) | 0;
+        // does the same job as parseInt truncates the float
+        minutes = (diff / 60) | 0;
+        seconds = (diff % 60) | 0;
 
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
 
-                display.textContent = minutes + ":" + seconds;
+        display.textContent = minutes + ":" + seconds;
 
-                //place code in here, the code will run when the timer reaches zero.
-                if (diff <= 0) {
-                }
-            };
-            // we don't want to wait a full second before the timer starts
-            timer();
-            setInterval(timer, 100);
+        //place code in here, the code will run when the timer reaches zero.
+        if (diff <= 0) {
         }
-
-        window.onload = function () {
-            var fiveMinutes = 60 * 1,
-                    display = document.querySelector('#timer');
-            startTimer(fiveMinutes, display);
-        };
+    }
+    // we don't want to wait a full second before the timer starts
+    timer();
+    setInterval(timer, 100);
+}
