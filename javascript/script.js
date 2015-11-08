@@ -1,5 +1,5 @@
 /* global Stopwatch */
-
+console.log(Calls());
 var counter = 0;
 var timer;
 $( initialise );
