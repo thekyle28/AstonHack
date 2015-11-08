@@ -1,9 +1,9 @@
 /* global Stopwatch */
 
-var score = 0;
-var timer;
-var nextSite;
 $( initialise );
+
+var score = 0;
+var nextSite;
 
 function initialise() {
     //console.log(new Domain("imgur.com", new Calls().makeCall("GetTopics", "Item=imgur.com")));
@@ -41,7 +41,8 @@ function createTarget() {
         } else {
             setScore(score);
             $(this).stop();
-            site.health--;
+            var topic = $(".ammo-selected")[0].innerHTML.trim();
+            site.health -= site.topics[topic];
             $(this).text(site.name + " " + site.health);
             $(this).effect("shake");
         }
@@ -54,30 +55,12 @@ function setScore(score){
     $("#score").text("Score: " + score);
 }
 
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex ;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
 function startTimer(duration, display) {
     var start = Date.now(),
             diff,
             minutes,
-            seconds;
+            seconds,
+            interval;
     function timer() {
         // get the number of seconds that have elapsed since
         // startTimer() was called
@@ -94,9 +77,10 @@ function startTimer(duration, display) {
 
         //place code in here, the code will run when the timer reaches zero.
         if (diff <= 0) {
+            clearInterval(interval);
         }
     }
     // we don't want to wait a full second before the timer starts
     timer();
-    setInterval(timer, 100);
+    interval = setInterval(timer, 100);
 }
