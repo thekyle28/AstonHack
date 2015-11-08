@@ -13,6 +13,7 @@ function initialise(){
     shuffle(sites);
     createTarget();
     timer.start();
+    console.log(new Domain("imgur.com", new Calls().makeCall("GetTopics", "Item=imgur.com")));
 }
 
 
