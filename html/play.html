@@ -4,6 +4,8 @@
         <title>Web Destroyer</title>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
         <!-- Latest compiled and minified JavaScript -->
@@ -39,12 +41,27 @@
           </div><!--container-fluid -->
         </div><!-- navbar navbar-default -->
         
-        <h1 id="heading">Score: 0</h1>
-        <h1 id="timer"></h1>
-        <div id="target-area">
-            
+        <div class="container">
+            <h1 id="damage" class="pull-right">Damage: 0</h1>
+            <h1 id="score">Score: 0</h1>
+            <h1 id="timer"></h1>
+            <div id="target-area">
+            </div>
+            <div class="row">
+                <div class="col-md-3 bg-success center ammo-selector ammo-selected" style="height: width;">
+                    NEWS
+                </div>
+                <div class="col-md-3 bg-info center ammo-selector" style="height: width;">
+                    SHOPPING
+                </div>
+                <div class="col-md-3 bg-danger center ammo-selector" style="height: width;">
+                    ARTS
+                </div>
+                <div class="col-md-3 bg-primary center ammo-selector" style="height: width;">
+                    BUSINESS
+                </div>
+            </div>
         </div>
-        
     </body>
     
     <script>

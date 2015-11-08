@@ -1,6 +1,29 @@
 #target {
+    border-radius: 100px;
     margin: auto auto;
     height: 200px;
     width: 200px;
     background-color: red;
+    padding: 70px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    
+}
+
+#target-area{
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.ammo-selector{
+    height: 100px;
+    border-radius: 10px;
+    padding: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.ammo-selected{
+    border: 3px solid red;   
 }
