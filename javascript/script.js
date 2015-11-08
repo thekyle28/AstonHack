@@ -22,6 +22,7 @@ function initialise() {
     });
 }
 
+var canClick = true;
 
 function createTarget() {
     var site = nextSite;
@@ -34,27 +35,41 @@ function createTarget() {
     target.text(site.name + " " + site.health);
 
     target.click(function() {
-        if (site.health <= 0) {
-            $(this).stop();
-            $(this).remove();
-            score++;
-            setScore(score);
-            createTarget();
-        } else {
-            setScore(score);
-            $(this).stop();
-            var topic = $(".ammo-selected")[0].innerHTML.trim();
-            site.health -= site.topics[topic];
+        if (!canClick) return;
+        setScore(score);
+        var topic = $(".ammo-selected").text().trim();
+        var index = site.topicOrder.indexOf(topic);
+        if (index !== -1) {
+            site.health -= (500 / (index + 1));
             $(this).text(site.name + " " + site.health);
             $(this).effect("shake");
+            if (site.health <= 0) {
+                var best = $("#" + site.topicOrder[0].toLowerCase());
+                best.addClass("best-topic");
+            }
         }
+        canClick = false;
+        var clicked = this;
+        setTimeout(function() {
+            if (site.health <= 0) {
+                clicked.remove();
+                score++;
+                setScore(score);
+                createTarget();
+                $(".best-topic").removeClass("best-topic");
+            }
+            canClick = true;
+        }, 750);
     });
     $("#target-area").append(target);
     
 }
 
+var scorey = 0;
+
 function setScore(score){
     $("#score").text("Score: " + score);
+    scorey = score;
 }
 
 function startTimer(duration, display) {
@@ -80,6 +95,8 @@ function startTimer(duration, display) {
         //place code in here, the code will run when the timer reaches zero.
         if (diff <= 0) {
             clearInterval(interval);
+            alert("Time's up! Your score is " + scorey);
+            window.location.replace("index.html");
         }
     }
     // we don't want to wait a full second before the timer starts

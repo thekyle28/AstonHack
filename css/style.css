@@ -1,3 +1,10 @@
+body {
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 #target {
     border-radius: 100px;
     margin: auto auto;
@@ -12,8 +19,8 @@
 }
 
 #target-area{
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding-top: 75px;
+    padding-bottom: 75px;
 }
 
 .ammo-selector{
@@ -26,4 +33,8 @@
 
 .ammo-selected{
     border: 3px solid red;   
+}
+
+.best-topic {
+    border: 3px solid lime;
 }
