@@ -8,4 +8,9 @@ function Domain(name, json) {
     for (var i = data.length - 1; i >= 0; i--) {
         this.topics[data[i].Topic.split("/")[0].toUpperCase()] = data[i].TopicalTrustFlow;
     }
+
+    var topicOrder = [];
+    for (var key in ["NEWS", "SHOPPING"]) {
+
+    }
 }

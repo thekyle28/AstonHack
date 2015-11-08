@@ -6,7 +6,9 @@ var score = 0;
 var nextSite;
 
 function initialise() {
-    //console.log(new Domain("imgur.com", new Calls().makeCall("GetTopics", "Item=imgur.com")));
+    //new Calls().makeCall("GetTopics", "Item=youtube.com", function(out) {
+    //    console.log(new Domain("youtube.com",out));
+    //});
     getRandomSite(function(out) {
         nextSite = out;
         createTarget();

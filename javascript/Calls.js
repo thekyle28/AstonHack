@@ -1,6 +1,6 @@
 function Calls() {
 
-    var useFake = false;
+    var useFake = true;
 
     this.makeCall = function (cmd, params, after) {
         if (useFake)
